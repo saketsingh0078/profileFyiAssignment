@@ -1,7 +1,8 @@
 import { addCart } from "@/lib/cartSlice";
-import { useAppDispatch } from "@/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import React, { useState } from "react";
 import Notification from "./Notification";
+import { useRouter } from "next/navigation";
 
 type Product = {
   id: number;
@@ -19,30 +20,43 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
-  const { id, title, description, images, price, brand, discountPercentage } =
-    data;
+  const { id, title, images, price, brand } = data;
+  console.log(data);
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const cartData = useAppSelector((store) => store.cart.cartData);
   const [showNotification, setShowNotification] = useState(false);
 
+  const isInCart = cartData.some((item) => item.id === id);
+
   const handleClick = () => {
-    dispatch(addCart({ ...data, quantity: data.quantity ?? 1 }));
-    setShowNotification(true);
-    const timerID = setTimeout(() => setShowNotification(false), 1500);
-    if (showNotification) clearTimeout(timerID);
+    if (isInCart) {
+      router.push("/cart");
+    } else {
+      dispatch(addCart({ ...data, quantity: data.quantity ?? 1 }));
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 1500);
+    }
   };
 
   return (
-    <div className="flex flex-col h-fit border-2 border-solid shadow-sm mb-2 rounded-md px-2 pb-3 gap-1">
-      <img className="w-[250px] h-[200px] bg-cover" src={images} alt={title} />
+    <div className="flex flex-col w-[270px]  border-2 border-solid shadow-md mb-2 rounded-md px-2 pb-3 gap-1">
+      <img
+        className="w-[250px] h-[200px] bg-cover"
+        src={images[0]}
+        alt={title}
+      />
       <p className="text-gray-500">{brand}</p>
       <h2>{title}</h2>
       <div className="flex justify-between items-center">
-        <p>Price: ${price}</p>
+        <p>Price: ₹{Math.floor(price)}</p>
         <button
           onClick={handleClick}
-          className="bg-red-500 text-white rounded-md px-2 py-1"
+          className={`${
+            isInCart ? "bg-blue-400" : "bg-red-500"
+          } text-white rounded-md px-2 py-1`}
         >
-          Add to cart
+          {isInCart ? "Go to cart" : "Add to cart"}
         </button>
       </div>
       {showNotification && (

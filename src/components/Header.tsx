@@ -16,12 +16,13 @@ const Header = () => {
   return (
     <div className="flex justify-between items-center px-2">
       <img
+        onClick={() => router.push("/")}
         className="w-[130px] h-[60px] mix-blend-normal"
         src={LOGO_IMG}
         alt="logo"
       />
       <div className="flex items-center gap-3 text-lg">
-        <h1>Home</h1>
+        <button onClick={() => router.push("/")}>Home</button>
         <div
           className="flex items-center cursor-pointer"
           onClick={handleCartClick}

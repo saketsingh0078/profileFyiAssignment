@@ -39,11 +39,11 @@ const Cart: React.FC = () => {
   };
 
   const handleDiscountCode = () => {
-    if (discountCode === "DISCOUNT10") {
-      dispatch(applyDiscountCode(10));
+    if (discountCode === "DISCOUNT30") {
+      dispatch(applyDiscountCode(30));
       setMsg("Coupon Applied");
     } else {
-      setMsg("Invalid discount code.");
+      setMsg("Invalid discount code. Try DISCOUNT30");
     }
   };
 
@@ -61,13 +61,13 @@ const Cart: React.FC = () => {
             >
               <img
                 className="w-full h-48 sm:w-24 sm:h-24 object-cover rounded-md"
-                src={item.images}
+                src={item.images[0]}
                 alt={item.title}
               />
               <div className="flex-1 sm:ml-4 mt-4 sm:mt-0">
                 <h2 className="text-lg font-bold">{item.title}</h2>
                 <p className="text-gray-600">{item.brand}</p>
-                <p>${item.price}</p>
+                <p>₹{Math.floor(item.price)}</p>
               </div>
               <div className="flex items-center gap-2 mt-4 sm:mt-0">
                 <button
@@ -109,7 +109,7 @@ const Cart: React.FC = () => {
             <p className="text-lg">
               Subtotal:{" "}
               <span className="font-bold">
-                ${Math.floor(calculateSubtotal() * (1 - discount / 100))}
+                ₹{Math.floor(calculateSubtotal() * (1 - discount / 100))}
               </span>
             </p>
           </div>
