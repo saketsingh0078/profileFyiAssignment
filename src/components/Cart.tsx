@@ -16,8 +16,6 @@ const Cart: React.FC = () => {
   const [msg, setMsg] = useState<string | null>(null);
   const [discountCode, setDiscountCode] = useState<string>("");
 
-  console.log(cartData);
-
   const handleRemove = (id: number) => {
     dispatch(removeCartItem(id));
   };

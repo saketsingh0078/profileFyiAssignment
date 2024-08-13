@@ -20,9 +20,9 @@ interface Product {
 const Product: React.FC = () => {
   const dispatch = useAppDispatch();
   const productData = useAppSelector((store) => store.product.productData);
-  const [limit] = useState<number>(10); // Number of products to load per fetch
-  const [skip, setSkip] = useState<number>(0); // Number of products to skip
-  const [hasMore, setHasMore] = useState<boolean>(true); // Track if more products are available
+  const [limit] = useState<number>(10);
+  const [skip, setSkip] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchProducts = async () => {
@@ -41,11 +41,11 @@ const Product: React.FC = () => {
       );
 
       const newProducts = response.data.products;
-      dispatch(addProductData([...productData, ...newProducts])); // Add new products to the Redux store
+      dispatch(addProductData([...productData, ...newProducts]));
       setSkip(skip + limit);
 
       if (newProducts.length < limit) {
-        setHasMore(false); // No more products to load
+        setHasMore(false);
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -74,7 +74,7 @@ const Product: React.FC = () => {
   }, [skip, loading]);
 
   return (
-    <div className="flex flex-wrap gap-6 justify-center">
+    <div className="flex flex-wrap gap-6 justify-center ">
       {productData.map((item) => (
         <ProductCard key={item.id} data={item} />
       ))}

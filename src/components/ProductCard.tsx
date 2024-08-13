@@ -21,7 +21,6 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const { id, title, images, price, brand } = data;
-  console.log(data);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const cartData = useAppSelector((store) => store.cart.cartData);
@@ -42,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   return (
     <div className="flex flex-col w-[270px]  border-2 border-solid shadow-md mb-2 rounded-md px-2 pb-3 gap-1">
       <img
-        className="w-[250px] h-[200px] bg-cover"
+        className="w-[250px] h-[240px] bg-cover"
         src={images[0]}
         alt={title}
       />
